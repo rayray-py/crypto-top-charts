@@ -24,7 +24,7 @@ export const TradingViewChart: React.FC<{ symbol: string }> = ({ symbol }) => {
           "support_host": "https://www.tradingview.com"
         }`;
     container.current?.appendChild(script);
-  }, []);
+  }, [symbol]);
 
   return (
     <div
