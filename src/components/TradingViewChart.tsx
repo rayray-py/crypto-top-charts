@@ -1,23 +1,50 @@
-import React from "react";
+"use client";
+import React, { useEffect, useRef, memo } from "react";
 
-type TradingViewChartProps = {
-  symbol: string;
-};
+export const TradingViewChart: React.FC<{ symbol: string }> = ({ symbol }) => {
+  const container = useRef<HTMLDivElement>();
 
-const TradingViewChart: React.FC<TradingViewChartProps> = ({ symbol }) => {
-  const tradingViewUrl = `https://s.tradingview.com/widgetembed/?frameElementId=tradingview_2f96e&symbol=BINANCE:${symbol}USDT&interval=D&symboledit=1&saveimage=1&toolbarbg=f1f3f6&details=1&studies=%5B%5D&theme=Light&style=1&timezone=Etc%2FUTC&studies_overrides=%7B%7D&overrides=%7B%7D&enabled_features=%5B%5D&disabled_features=%5B%5D&locale=en#`;
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src =
+      "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
+    script.type = "text/javascript";
+    script.async = true;
+    script.innerHTML = `
+        {
+          "autosize": true,
+          "symbol": "BINANCE:${symbol}USDT",
+          "interval": "D",
+          "timezone": "Etc/UTC",
+          "theme": "light",
+          "style": "1",
+          "locale": "en",
+          "enable_publishing": false,
+          "allow_symbol_change": true,
+          "support_host": "https://www.tradingview.com"
+        }`;
+    container.current?.appendChild(script);
+  }, []);
 
   return (
-    <iframe
-      src={tradingViewUrl}
-      width="100%"
-      height="450"
-      allowTransparency
-      frameBorder="0"
-      scrolling="no"
-      allowFullScreen
-    />
+    <div
+      className="tradingview-widget-container"
+      ref={container as React.LegacyRef<HTMLDivElement>}
+      style={{ height: "100%", width: "100%" }}
+    >
+      <div
+        className="tradingview-widget-container__widget"
+        style={{ height: "calc(100% - 32px)", width: "100%" }}
+      ></div>
+      <div className="tradingview-widget-copyright">
+        <a
+          href="https://www.tradingview.com/"
+          rel="noopener nofollow"
+          target="_blank"
+        >
+          <span className="blue-text">Track all markets on TradingView</span>
+        </a>
+      </div>
+    </div>
   );
 };
-
-export default TradingViewChart;

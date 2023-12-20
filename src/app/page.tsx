@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import TradingViewChart from "@/components/TradingViewChart";
+import { TradingViewChart } from "@/components/TradingViewChart";
 import { Box, SimpleGrid } from "@chakra-ui/react";
 
 type CoinData = {
