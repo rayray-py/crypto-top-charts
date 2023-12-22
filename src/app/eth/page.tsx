@@ -19,7 +19,7 @@ const ETHChart: React.FC = () => {
           symbol={symbol}
           tradingViewConfig={{
             scriptSRC:
-              "https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js",
+              "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js",
             // library_path: "/assets/chart/charting_library/",
           }}
           onSymbolChange={(symbol) => {
